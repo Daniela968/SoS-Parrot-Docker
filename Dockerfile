@@ -1,12 +1,33 @@
+## s
+FROM ubuntu:24.04
 
-FROM parrotsec/core:rolling
-#MAINTAINER Lorenzo "Palinuro" Faletra (palinuro@linux.it)
+# prevent interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
 
+# update dependencies
+RUN apt update
+RUN apt upgrade -y
 
-RUN apt-get update
+# install xfce desktop
+RUN apt install -y xfce4 xfce4-goodies
 
-RUN apt-get upgrade
+# install dependencies
+RUN apt install -y \
+  tightvncserver \
+  novnc \
+  net-tools \
+  nano \
+  vim \
+  neovim \
+  curl \
+  wget \
+  firefox \
+  git \
+  python3 \
+  python3-pip
 
+# xfce fixes
+RUN update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal.wrapper
 #Sets WORKDIR to /usr
 
 WORKDIR /root
