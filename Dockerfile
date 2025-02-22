@@ -2,10 +2,18 @@
 FROM parrotsec/core:rolling
 #MAINTAINER Lorenzo "Palinuro" Faletra (palinuro@linux.it)
 ENV DEBIAN_FRONTEND noninteractive
-ENV VERSION 4.8-1
-# Install components
-RUN apt-get update; apt-get -y full-upgrade; apt-get -y dist-upgrade; apt-get -y install parrot-pico; apt-get -y install parrot-mini parrot-tools-cloud; apt-get -y install parrot-interface parrot-interface-full parrot-tools-full; apt -y --allow-downgrades install parrot-interface parrot-interface-full parrot-tools-full; apt-get -y install xrdp; rm -rf /var/lib/apt/lists/*
-# Set locale to en_US.utf8
+#https://github.com/moby/moby/issues/27988
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+RUN apt-get update
+
+RUN apt-get install -y wget curl net-tools whois netcat-traditional pciutils bmon htop tor
+
+#Sets WORKDIR to /usr
+
+WORKDIR /usr
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 ENV LANG en_US.utf8
 
 # Define arguments and environment variables
