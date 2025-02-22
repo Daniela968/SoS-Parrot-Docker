@@ -1,9 +1,7 @@
 
 FROM parrotsec/core:rolling
 #MAINTAINER Lorenzo "Palinuro" Faletra (palinuro@linux.it)
-ENV DEBIAN_FRONTEND noninteractive
-#https://github.com/moby/moby/issues/27988
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
 
 RUN apt-get update
 
@@ -11,10 +9,9 @@ RUN apt-get install -y wget curl net-tools whois netcat-traditional pciutils bmo
 
 #Sets WORKDIR to /usr
 
-WORKDIR /usr
+WORKDIR /root
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-ENV LANG en_US.utf8
 
 # Define arguments and environment variables
 ARG NGROK_TOKEN
