@@ -5,7 +5,7 @@ FROM parrotsec/core:rolling
 
 RUN apt-get update
 
-RUN apt-get install -y wget curl net-tools whois netcat-traditional pciutils bmon htop tor
+RUN apt-get upgrade
 
 #Sets WORKDIR to /usr
 
