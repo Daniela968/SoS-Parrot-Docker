@@ -53,24 +53,7 @@ ENV TERM=xterm-256color
 
 ENTRYPOINT ["/bin/bash"]
 
-FROM base AS wordlists
 
-ARG DEBIAN_FRONTEND=noninteractive
-
-# Install Seclists
-RUN mkdir -p /usr/share/seclists \
-    # The apt-get install seclists command isn't installing the wordlists, so clone the repo.
-    && git clone --depth 1 https://github.com/danielmiessler/SecLists.git /usr/share/seclists
-
-# Prepare rockyou wordlist
-RUN mkdir -p /usr/share/wordlists
-WORKDIR /usr/share/wordlists
-RUN cp /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt.tar.gz /usr/share/wordlists/ \
-    && tar -xzf rockyou.txt.tar.gz
-
-WORKDIR /root
-# Install ssh, wget, and unzip
-RUN apt install ssh  wget unzip -y > /dev/null 2>&1
 
 
 
